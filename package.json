@@ -10,7 +10,10 @@
   },
   "dependencies": {
     "@react-aria/ssr": "^3.3.0",
+    "@react-native-masked-view/masked-view": "^0.2.7",
     "@react-navigation/bottom-tabs": "^6.3.2",
+    "@react-navigation/drawer": "^6.4.4",
+    "@react-navigation/stack": "^6.2.3",
     "expo": "~46.0.7",
     "expo-local-authentication": "~12.3.0",
     "expo-secure-store": "~11.3.0",
@@ -18,13 +21,15 @@
     "native-base": "^3.4.13",
     "react": "18.0.0",
     "react-dom": "18.0.0",
-    "react-native": "0.69.4",
+    "react-native": "0.69.5",
+    "react-native-gesture-handler": "~2.5.0",
     "react-native-safe-area-context": "4.3.1",
     "react-native-screens": "~3.15.0",
     "react-native-svg": "12.3.0",
     "react-native-swipe-list-view": "^3.2.9",
     "react-native-unimodules": "^0.15.0",
-    "react-native-web": "~0.18.7"
+    "react-native-web": "~0.18.7",
+    "expo-updates": "~0.14.5"
   },
   "devDependencies": {
     "@babel/core": "^7.18.6"

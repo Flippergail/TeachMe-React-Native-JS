@@ -19,41 +19,38 @@ import SettingsScreen from './app/Screens/SettingsScreen';
 
 import colours from './app/config/colours';
 
-export let isSetOpen = React.createContext(false);
-
 const Tab = createBottomTabNavigator();
 
 export default function App() {
 
   return (
-    <NavigationContainer>
-      <Tab.Navigator
-       backBehavior='history'
-       headerShown={false}
+      <NavigationContainer>
+        <Tab.Navigator
+        backBehavior='history'
+        headerShown={false}
 
-       screenOptions={({ route }) => ({
-        headerShown: false,
-        tabBarIcon: ({ focused, color, size }) => {
-          let iconName;
+        screenOptions={({ route }) => ({
+          tabBarStyle: {backgroundColor: colours.secondaryBackground},
+          headerShown: false,
+          tabBarIcon: ({ focused, color, size }) => {
+            let iconName;
 
-          if (route.name === 'Home') {
-            iconName = focused
-              ? 'home'
-              : 'home-outline';
-          } else if (route.name === 'Settings') {
-            iconName = focused ? 'settings' : 'settings-outline';
-          }
+            if (route.name === 'Home') {
+              iconName = focused ? 'home' : 'home-outline';
+            } else if (route.name === 'Settings') {
+              iconName = focused ? 'settings' : 'settings-outline';
+            }
 
-          // You can return any component that you like here!
-          return <Ionicons name={iconName} size={size} color={color} />;
-        },
-        tabBarActiveTintColor: colours.primary,
-        tabBarInactiveTintColor: 'gray',
-      })}
-      >
-        <Tab.Screen name="Home" options={{tabBarShowLabel: false}} component={HomeScreen} />
-        <Tab.Screen name="Settings" options={{tabBarShowLabel: false}} component={SettingsScreen} />
-      </Tab.Navigator>
-    </NavigationContainer>
+            // You can return any component that you like here!
+            return <Ionicons name={iconName} size={size} color={color} />;
+          },
+          tabBarActiveTintColor: colours.primary,
+          tabBarInactiveTintColor: 'gray',
+        })}
+        >
+          <Tab.Screen name="Home" options={{tabBarShowLabel: false}} component={HomeScreen} />
+          <Tab.Screen name="Settings" options={{tabBarShowLabel: false}} component={SettingsScreen} />
+        </Tab.Navigator>
+      </NavigationContainer>
   );
 }

@@ -1,7 +1,8 @@
 export default {
     primary: 'tomato',
-    secondary: 'salmon',
-    backgroundColour: 'snow',
+    secondary: 'blanchedalmond',
+    secondaryBackground: 'blanchedalamond',
+    backgroundColour: 'indianred',
     black: '#000',
     white: '#ffffff',
     text: 'white',
