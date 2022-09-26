@@ -12,7 +12,8 @@
       "backgroundColor": "#ffffff"
     },
     "updates": {
-      "fallbackToCacheTimeout": 0
+      "fallbackToCacheTimeout": 0,
+      "url": "https://u.expo.dev/f2c5cb79-94b9-4a65-baf3-69472151cf92"
     },
     "assetBundlePatterns": [
       "**/*"
@@ -28,6 +29,14 @@
     },
     "web": {
       "favicon": "./app/assets/BrainLogoDesign.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "f2c5cb79-94b9-4a65-baf3-69472151cf92"
+      }
+    },
+    "runtimeVersion": {
+      "policy": "sdkVersion"
     }
   }
 }

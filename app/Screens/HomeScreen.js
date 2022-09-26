@@ -24,100 +24,88 @@ import FolderSettingsPage from './FolderSettingsScreen';
 import ScrollData from './ScrollData';
 
 
-let FileKeyCount = 6;
-
 let data = [{
-  key: '1',
+  key: '0',
   Name: 'Maths',
-  IconUrl: 'https://tse1.mm.bing.net/th?id=OIP.obfWC0XjnIkHs9O2j1pi5AHaHa&pid=Api',
+  IconUrl: 'https://d29fhpw069ctt2.cloudfront.net/photo/7125/preview/174a24d3-7f7e-4401-9882-6cd7460da7fd_1280x1280.jpg',
   terms: [],
   isFolder: false,
-  itemNumber: 104,
   description: "",
 }, {
-  key: '2',
+  key: '1',
   Name: 'Chemistry',
-  IconUrl: 'https://tse1.mm.bing.net/th?id=OIP.obfWC0XjnIkHs9O2j1pi5AHaHa&pid=Api',
+  IconUrl: 'https://www.pngitem.com/pimgs/m/154-1547044_chemistry-icon-png-png-download-biology-chemistry-science.png',
   childSets: [
     {
-      key: '7',
+      key: '0',
       Name: 'Bonding',
       IconUrl: 'https://tse1.mm.bing.net/th?id=OIP.obfWC0XjnIkHs9O2j1pi5AHaHa&pid=Api',
       terms: [],
       isFolder: false,
-      itemNumber: 21,
       description: "",
     },{
-      key: '8',
+      key: '1',
       Name: 'Metals',
       IconUrl: 'https://tse1.mm.bing.net/th?id=OIP.obfWC0XjnIkHs9O2j1pi5AHaHa&pid=Api',
       terms: [],
       isFolder: false,
-      itemNumber: 13,
       description: "metals bonding and structure revision",
     },{
-      key: '9',
+      key: '2',
       Name: 'Non-Metals',
       IconUrl: 'https://tse1.mm.bing.net/th?id=OIP.obfWC0XjnIkHs9O2j1pi5AHaHa&pid=Api',
       terms: [],
       isFolder: false,
-      itemNumber: 8,
       description: "non-metals bonding and structure revision",
     }
   ],
   FolderParentLevel: "Parent",
   isFolder: true,
-  itemNumber: 2,
   description: "",
 }, {
-  key: '3',
+  key: '2',
   Name: 'Geography',
-  IconUrl: 'https://tse1.mm.bing.net/th?id=OIP.obfWC0XjnIkHs9O2j1pi5AHaHa&pid=Api',
+  IconUrl: 'https://cdn2.iconfinder.com/data/icons/back-to-school-17/128/schoolsetflat-17-512.png',
   childSets: [
     {
-      key: '10',
+      key: '0',
       Name: 'Maps',
       IconUrl: 'https://tse1.mm.bing.net/th?id=OIP.obfWC0XjnIkHs9O2j1pi5AHaHa&pid=Api',
       terms: [],
       isFolder: false,
-      itemNumber: 21,
       description: "compass bearings and calculating distances",
     },{
-      key: '11',
+      key: '1',
       Name: 'Rivers',
       IconUrl: 'https://tse1.mm.bing.net/th?id=OIP.obfWC0XjnIkHs9O2j1pi5AHaHa&pid=Api',
       terms: [],
       isFolder: false,
-      itemNumber: 13,
       description: "types of rivers and information about them",
     }
   ],
   FolderParentLevel: "Parent",
   isFolder: true,
-  itemNumber: 5,
   description: "",
 }, {
-  key: '4',
+  key: '3',
   Name: 'Latin',
   IconUrl: 'https://tse1.mm.bing.net/th?id=OIP.obfWC0XjnIkHs9O2j1pi5AHaHa&pid=Api',
   terms: [],
   isFolder: false,
-  itemNumber: 97,
   description: "",
 }, {
-  key: '5',
+  key: '4',
   Name: 'History',
-  IconUrl: 'https://tse1.mm.bing.net/th?id=OIP.obfWC0XjnIkHs9O2j1pi5AHaHa&pid=Api',
+  IconUrl: 'https://cdn1.iconfinder.com/data/icons/school-64/512/school-education-study-learn-11-512.png',
   terms: [],
   isFolder: false,
-  itemNumber: 42,
   description: "",
 },{
-  key: '6',
+  key: '5',
   Name: 'Biology',
-  IconUrl: 'https://tse1.mm.bing.net/th?id=OIP.obfWC0XjnIkHs9O2j1pi5AHaHa&pid=Api',
+  IconUrl: 'https://cdn1.iconfinder.com/data/icons/school-64/512/school-education-study-learn-09-1024.png',
+  terms: [],
   isFolder: false,
-  itemNumber: 42,
   description: "",
 }];
 
@@ -204,7 +192,7 @@ function HomePage() {
                               setFileModalVisible(false);
                               Keyboard.dismiss();
 
-                              FileKeyCount+=1
+                              FileKeyCount = listData.length;
 
                               let newFile = null
                               if (creatingFolder) {
@@ -216,7 +204,6 @@ function HomePage() {
                                   childSets: [],
                                   FolderParentLevel: "Parent",
                                   isFolder: creatingFolder,
-                                  itemNumber: 0,
                                   description: "",
                                 };
                               } else {
@@ -227,13 +214,14 @@ function HomePage() {
                                   IconUrl: 'https://tse1.mm.bing.net/th?id=OIP.obfWC0XjnIkHs9O2j1pi5AHaHa&pid=Api',
                                   isFolder: creatingFolder,
                                   terms: [],
-                                  itemNumber: 0,
                                   description: "",
                                 };
                               }
 
-                              data.push(newFile)
-                              setListData(data)
+                              listData.push(newFile)
+                              setListData(listData)
+                              
+                              data = listData
 
                               if (creatingFolder) {
                                 navigation.push('FolderPage', {Item: newFile});
@@ -252,137 +240,5 @@ function HomePage() {
     </SSRProvider>
   );
 }
-
-/*function ScrollData(props) {
-  const listData = props.listData;
-  const setListData= props.setListData;
-  const navigation = props.navigation;
-
-  const [deleteModalVisible, setDeleteModalVisible] = React.useState(false);
-  const [deletingRowInfo, setDeletingRowInfo] = React.useState({});
-  const [deletingRowMap, setDeletingRowMap] = React.useState(null);
-  const [deletingRowKey, setDeletingRowKey] = React.useState(null);
-
-  const closeRow = (rowMap, rowKey) => {
-    if (rowMap[rowKey]) {
-      rowMap[rowKey].closeRow();
-    }
-  };
-
-  const ConfirmDeleteRowModal = ()=> {
-   return(<Modal isOpen={deleteModalVisible} onClose={() => setDeleteModalVisible(false)} size="lg">
-    <Modal.Content maxWidth="350">
-      <Modal.CloseButton />
-      <Modal.Header>Confirm Permanent Delete</Modal.Header>
-      <Modal.Body>
-        <Text color={colours.secondarytext} fontWeight="small">Please confirm you would like to delete:</Text>
-        <Text color={'red.500'} fontWeight="medium">{deletingRowInfo.Name} | Type: {deletingRowInfo.FileType} | Id: {deletingRowInfo.Id}</Text>
-      </Modal.Body>
-      <Modal.Footer>
-        <Button flex="1" onPress={() => {
-          deleteRow(deletingRowMap, deletingRowKey)
-          setDeleteModalVisible(false)
-      }}>
-          Delete
-        </Button>
-      </Modal.Footer>
-    </Modal.Content>
-  </Modal>)}
-
-  const confirmDeleteRow = (rowMap, rowKey, rowName, isRowFolder, rowId) =>{
-    let rowFileType = isRowFolder ? "Folder" : "Set"
-    setDeletingRowInfo({FileType: rowFileType, Name: rowName, Id: rowId});
-    setDeleteModalVisible(true);
-
-    setDeletingRowMap(rowMap);
-    setDeletingRowKey(rowKey);
-  }
-
-  const deleteRow = (rowMap, rowKey) => {
-    closeRow(rowMap, rowKey);
-    const newData = [...listData];
-    const prevIndex = listData.findIndex(item => item.key === rowKey);
-    newData.splice(prevIndex, 1);
-    data=newData;
-    setListData(newData);
-  };
-
-  const onRowDidOpen = rowKey => {};
-
-  const renderItem = ({
-    item,
-    index
-  }) => <Box borderRadius={20} bg={colours.primary} borderWidth={2} borderColor={'firebrick'} marginVertical={3}>
-      <Pressable onPress={() => {
-        item.isFolder ? navigation.push('FolderPage', {Item: item}) : navigation.push('SetPage', {Item: item});
-      }} >
-        <Box pl="4" pr="5" py="3" >
-          <HStack alignItems="center" space={3}>
-            <Image borderRadius={10} size="48px" source={{uri: item.IconUrl}} alt="Image Failed To Load" />
-            <VStack>
-              <Text fontSize={"xl"} color={colours.text} _dark={{
-              color: colours.text
-            }} bold>
-                {item.Name}
-              </Text>
-              <Text color={colours.text} _dark={{
-              color: colours.text
-            }}>
-                {item.description}
-              </Text>
-            </VStack>
-            <Spacer />
-            <Text right={0} flexDirection={'row'} position={'absolute'} alignSelf="flex-start" fontSize="xs" color={colours.text} _dark={{
-            color: colours.text
-          }}>
-              {item.isFolder ? "sets: " : "terms: "}{item.itemNumber}
-            </Text>
-            {item.isFolder && <Icon as={<Ionicons name="folder" />} alignSelf="flex-end"  color={colours.text} size="lg" />}
-          </HStack>
-        </Box>
-      </Pressable>
-    </Box>;
-
-  const renderHiddenItem = (data, rowMap) => (
-    <HStack flex="1" pl="2.8" marginVertical={3}>
-      <Pressable borderRadius={20} w="81" ml="auto" cursor="pointer" bg="red.500" justifyContent="center" onPress={() => confirmDeleteRow(rowMap, data.item.key, data.item.Name, data.item.isFolder, data.item.key)} _pressed={{opacity: 0.5}}>
-        <VStack alignItems="center" space={2}>
-          <Icon as={<Ionicons name="close" />} color={colours.text} size="sm" />
-          <Text color={colours.text} fontSize="sm" fontWeight="medium">
-            Delete
-          </Text>
-        </VStack>
-      </Pressable>
-    </HStack>
-  );
-
-  return(
-  <Box borderRadius={20} bg={colours.backgroundColour} flex="1">
-      <Center px="3">
-        <ConfirmDeleteRowModal/>
-      </Center>
-      <SwipeListView data={listData} renderItem={renderItem} renderHiddenItem={renderHiddenItem} contentContainerStyle={{paddingBottom:10}} rightOpenValue={-83} previewRowKey={'0'} previewOpenValue={-40} previewOpenDelay={3000} onRowDidOpen={onRowDidOpen} />
-  </Box>
-  )
-}*/
-
-
-const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      marginTop: StatusBar.currentHeight || 0,
-    },
-    item: {
-      backgroundColor: colours.secondary,
-      padding: 15,
-      marginVertical: 8,
-      marginHorizontal: 16,
-      alignItems: 'center',
-      borderRadius: 20,
-    },
-    title: {
-      fontSize: 32,
-    },
-});
 
 export default HomeScreen;

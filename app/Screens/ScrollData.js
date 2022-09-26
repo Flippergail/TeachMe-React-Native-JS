@@ -56,11 +56,9 @@ export default function ScrollData(props) {
   
     const deleteRow = (rowMap, rowKey) => {
       closeRow(rowMap, rowKey);
-      const newData = [...listData];
       const prevIndex = listData.findIndex(item => item.key === rowKey);
-      newData.splice(prevIndex, 1);
-      data=newData;
-      setListData(newData);
+      listData.splice(prevIndex, 1);
+      setListData(listData);
     };
   
     const onRowDidOpen = rowKey => {};
@@ -91,7 +89,7 @@ export default function ScrollData(props) {
               <Text right={0} flexDirection={'row'} position={'absolute'} alignSelf="flex-start" fontSize="xs" color={colours.text} _dark={{
               color: colours.text
             }}>
-                {item.isFolder ? "sets: " : "terms: "}{item.itemNumber}
+                {item.isFolder ? "children: " : "terms: "}{item.isFolder ? item.childSets.length : item.terms.length}
               </Text>
               {item.isFolder && <Icon as={<Ionicons name="folder" />} alignSelf="flex-end"  color={colours.text} size="lg" />}
             </HStack>
@@ -100,7 +98,15 @@ export default function ScrollData(props) {
       </Box>;
   
     const renderHiddenItem = (data, rowMap) => (
-      <HStack flex="1" pl="2.8" marginVertical={3}>
+      <HStack flex="1" pl="2.8" marginVertical={3} space={-5}>
+        <Pressable borderRadius={20} w="81" ml="auto" cursor="pointer" bg="red.500" justifyContent="center" _pressed={{opacity: 0.5}}>
+          <VStack alignItems="center" space={2}>
+            <Icon as={<Ionicons name="create-outline" />} color={colours.text} size="sm" />
+            <Text color={colours.text} fontSize="sm" fontWeight="medium">
+              Edit
+            </Text>
+          </VStack>
+        </Pressable>
         <Pressable borderRadius={20} w="81" ml="auto" cursor="pointer" bg="red.500" justifyContent="center" onPress={() => confirmDeleteRow(rowMap, data.item.key, data.item.Name, data.item.isFolder, data.item.key)} _pressed={{opacity: 0.5}}>
           <VStack alignItems="center" space={2}>
             <Icon as={<Ionicons name="close" />} color={colours.text} size="sm" />
@@ -109,7 +115,7 @@ export default function ScrollData(props) {
             </Text>
           </VStack>
         </Pressable>
-      </HStack>
+      </HStack> 
     );
   
     return(
@@ -117,7 +123,7 @@ export default function ScrollData(props) {
         <Center px="3">
           <ConfirmDeleteRowModal/>
         </Center>
-        <SwipeListView data={listData} renderItem={renderItem} renderHiddenItem={renderHiddenItem} contentContainerStyle={{paddingBottom:10}} rightOpenValue={-83} previewRowKey={'0'} previewOpenValue={-40} previewOpenDelay={3000} onRowDidOpen={onRowDidOpen} />
+        <SwipeListView data={listData} renderItem={renderItem} renderHiddenItem={renderHiddenItem} contentContainerStyle={{paddingBottom:10}} rightOpenValue={-166} previewRowKey={'0'} previewOpenValue={-30} previewOpenDelay={10000} onRowDidOpen={onRowDidOpen} />
     </Box>
     )
   }
