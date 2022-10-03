@@ -29,17 +29,20 @@ let data = [{
   Name: 'Maths',
   IconUrl: 'https://d29fhpw069ctt2.cloudfront.net/photo/7125/preview/174a24d3-7f7e-4401-9882-6cd7460da7fd_1280x1280.jpg',
   terms: [],
+  numChildren: 0,
   isFolder: false,
   description: "",
 }, {
   key: '1',
   Name: 'Chemistry',
   IconUrl: 'https://www.pngitem.com/pimgs/m/154-1547044_chemistry-icon-png-png-download-biology-chemistry-science.png',
+  numChildren: 3,
   childSets: [
     {
       key: '0',
       Name: 'Bonding',
       IconUrl: 'https://tse1.mm.bing.net/th?id=OIP.obfWC0XjnIkHs9O2j1pi5AHaHa&pid=Api',
+      numChildren: 0,
       terms: [],
       isFolder: false,
       description: "",
@@ -47,6 +50,7 @@ let data = [{
       key: '1',
       Name: 'Metals',
       IconUrl: 'https://tse1.mm.bing.net/th?id=OIP.obfWC0XjnIkHs9O2j1pi5AHaHa&pid=Api',
+      numChildren: 0,
       terms: [],
       isFolder: false,
       description: "metals bonding and structure revision",
@@ -54,6 +58,7 @@ let data = [{
       key: '2',
       Name: 'Non-Metals',
       IconUrl: 'https://tse1.mm.bing.net/th?id=OIP.obfWC0XjnIkHs9O2j1pi5AHaHa&pid=Api',
+      numChildren: 0,
       terms: [],
       isFolder: false,
       description: "non-metals bonding and structure revision",
@@ -66,11 +71,13 @@ let data = [{
   key: '2',
   Name: 'Geography',
   IconUrl: 'https://cdn2.iconfinder.com/data/icons/back-to-school-17/128/schoolsetflat-17-512.png',
+  numChildren: 2,
   childSets: [
     {
       key: '0',
       Name: 'Maps',
       IconUrl: 'https://tse1.mm.bing.net/th?id=OIP.obfWC0XjnIkHs9O2j1pi5AHaHa&pid=Api',
+      numChildren: 0,
       terms: [],
       isFolder: false,
       description: "compass bearings and calculating distances",
@@ -78,6 +85,7 @@ let data = [{
       key: '1',
       Name: 'Rivers',
       IconUrl: 'https://tse1.mm.bing.net/th?id=OIP.obfWC0XjnIkHs9O2j1pi5AHaHa&pid=Api',
+      numChildren: 0,
       terms: [],
       isFolder: false,
       description: "types of rivers and information about them",
@@ -90,6 +98,7 @@ let data = [{
   key: '3',
   Name: 'Latin',
   IconUrl: 'https://tse1.mm.bing.net/th?id=OIP.obfWC0XjnIkHs9O2j1pi5AHaHa&pid=Api',
+  numChildren: 0,
   terms: [],
   isFolder: false,
   description: "",
@@ -97,6 +106,7 @@ let data = [{
   key: '4',
   Name: 'History',
   IconUrl: 'https://cdn1.iconfinder.com/data/icons/school-64/512/school-education-study-learn-11-512.png',
+  numChildren: 0,
   terms: [],
   isFolder: false,
   description: "",
@@ -104,6 +114,7 @@ let data = [{
   key: '5',
   Name: 'Biology',
   IconUrl: 'https://cdn1.iconfinder.com/data/icons/school-64/512/school-education-study-learn-09-1024.png',
+  numChildren: 0,
   terms: [],
   isFolder: false,
   description: "",
@@ -116,8 +127,12 @@ function HomeScreen() {
   return(
     <Stack.Navigator initialRouteName='HomePage' >
       <Stack.Screen name="HomePage" component={HomePage} options={{'headerShown': false}} />  
+
       <Stack.Screen name="FolderPage" component={FolderPage} options={({route}) => ({ headerBackImage:()=>(<NativeBaseProvider><View style={{width: 44, height: 44, left: 5, bottom: 8}}><Image flex={1} source={require("../assets/CustomBackButton.png")} alt="Image Failed To Load" /></View></NativeBaseProvider>), headerBackTitleVisible:false ,title: route.params.Item.Name, headerTitleStyle: {color: colours.text}, headerStyle: { height: 85, backgroundColor: colours.primary }})}/>
+      <Stack.Screen name="FolderSettingsPage" component={FolderSettingsPage} options={({route}) => ({ headerBackImage:()=>(<NativeBaseProvider><View style={{width: 44, height: 44, left: 5, bottom: 8}}><Image flex={1} source={require("../assets/CustomBackButton.png")} alt="Image Failed To Load" /></View></NativeBaseProvider>), headerBackTitleVisible:false ,title: route.params.Item.Name, headerTitleStyle: {color: colours.text}, headerStyle: { height: 85, backgroundColor: colours.primary }})}/>
+
       <Stack.Screen name="SetPage" component={SetPage} options={({route}) => ({ headerBackImage:()=>(<NativeBaseProvider><View style={{width: 44, height: 44, left: 5, bottom: 8}}><Image flex={1} source={require("../assets/CustomBackButton.png")} alt="Image Failed To Load" /></View></NativeBaseProvider>), headerBackTitleVisible:false ,title: route.params.Item.Name, headerTitleStyle: {color: colours.text}, headerStyle: { height: 85, backgroundColor: colours.primary }})}/>
+      <Stack.Screen name="SetSettingsPage" component={SetSettingsPage} options={({route}) => ({ headerBackImage:()=>(<NativeBaseProvider><View style={{width: 44, height: 44, left: 5, bottom: 8}}><Image flex={1} source={require("../assets/CustomBackButton.png")} alt="Image Failed To Load" /></View></NativeBaseProvider>), headerBackTitleVisible:false ,title: route.params.Item.Name, headerTitleStyle: {color: colours.text}, headerStyle: { height: 85, backgroundColor: colours.primary }})}/>
     </Stack.Navigator>
   )
 }
@@ -128,6 +143,8 @@ function HomePage() {
   const initialRef = React.useRef(null);
   const finalRef = React.useRef(null);
   const [listData, setListData] = useState(data);
+
+  const [numChildren, setNumChildren] = useState(0);
 
   const [creatingFolder, setCreatingFolder] = useState(false);
   
@@ -147,7 +164,7 @@ function HomePage() {
           bg: colours.secondary
         }} flex={1} safeAreaTop maxW="400px" w="100%">
             <IconButton bottom={1} maxHeight={33} bg={colours.secondary} onPress={onOpen} icon={<Icon as={Ionicons} name="add-circle-outline" size='4xl' color={colours.secondarytext} />} />
-            <ScrollData navigation={navigation} listData={listData} setListData={setListData} />
+            <ScrollData navigation={navigation} listData={listData} setListData={setListData} numChildren={numChildren} setNumChildren={setNumChildren} />
           </Box>
         </Center>
 
@@ -201,6 +218,7 @@ function HomePage() {
                                   key: FileKeyCount.toString(),
                                   Name: fileModalText,
                                   IconUrl: 'https://tse1.mm.bing.net/th?id=OIP.obfWC0XjnIkHs9O2j1pi5AHaHa&pid=Api',
+                                  numChildren: 0,
                                   childSets: [],
                                   FolderParentLevel: "Parent",
                                   isFolder: creatingFolder,
@@ -212,6 +230,7 @@ function HomePage() {
                                   key: FileKeyCount.toString(),
                                   Name: fileModalText,
                                   IconUrl: 'https://tse1.mm.bing.net/th?id=OIP.obfWC0XjnIkHs9O2j1pi5AHaHa&pid=Api',
+                                  numChildren: 0,
                                   isFolder: creatingFolder,
                                   terms: [],
                                   description: "",

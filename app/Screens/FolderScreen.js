@@ -17,6 +17,7 @@ function FolderScreen({ route, navigation }) {
 
     const { Item } = route.params;
     const [listData, setListData] = useState(Item.childSets);
+    const [numChildren, setNumChildren] = useState(Item.numChildren);
 
     const [creatingFolder, setCreatingFolder] = useState(false);
 
@@ -36,7 +37,7 @@ function FolderScreen({ route, navigation }) {
                     bg: colours.secondary
                 }} flex={1} safeAreaTop maxW="400px" w="100%">
                         <IconButton maxHeight={42} bg={colours.secondary} onPress={onOpen} icon={<Icon as={Ionicons} name="add-circle-outline" size='4xl' color={colours.secondarytext} />} />
-                        <ScrollData navigation={navigation} listData={listData} setListData={setListData} />
+                        <ScrollData navigation={navigation} listData={listData} setListData={setListData} numChildren={numChildren} setNumChildren={setNumChildren} />
                     </Box>
                 </Center>
                 
@@ -90,6 +91,7 @@ function FolderScreen({ route, navigation }) {
                                         key: FileKeyCount.toString(),
                                         Name: fileModalText,
                                         IconUrl: 'https://tse1.mm.bing.net/th?id=OIP.obfWC0XjnIkHs9O2j1pi5AHaHa&pid=Api',
+                                        numChildren: 0,
                                         childSets: [],
                                         FolderParentLevel: "Parent",
                                         isFolder: creatingFolder,
@@ -101,6 +103,7 @@ function FolderScreen({ route, navigation }) {
                                         key: FileKeyCount.toString(),
                                         Name: fileModalText,
                                         IconUrl: 'https://tse1.mm.bing.net/th?id=OIP.obfWC0XjnIkHs9O2j1pi5AHaHa&pid=Api',
+                                        numChildren: 0,
                                         isFolder: creatingFolder,
                                         terms: [],
                                         description: "",
@@ -109,6 +112,9 @@ function FolderScreen({ route, navigation }) {
 
                                     listData.push(newFile)
                                     setListData(listData)
+
+                                    setNumChildren(numChildren+1)
+                                    console.log(numChildren)
 
                                     if (creatingFolder) {
                                         navigation.push('FolderPage', {Item: newFile});

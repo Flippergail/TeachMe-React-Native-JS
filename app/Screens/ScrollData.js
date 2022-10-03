@@ -1,5 +1,5 @@
 import 'react-native-gesture-handler';
-import React from 'react';
+import React, { useState } from 'react';
 
 import { Center, Button, Modal, Box, Text, Pressable, Icon, HStack, VStack, Spacer, Image } from 'native-base';
 
@@ -10,9 +10,13 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import colours from '../config/colours.js';
 
 export default function ScrollData(props) {
+    const navigation = props.navigation;
+
     const listData = props.listData;
     const setListData= props.setListData;
-    const navigation = props.navigation;
+
+    const numChildren = props.numChildren;
+    const setNumChildren = props.setNumChildren;
   
     const [deleteModalVisible, setDeleteModalVisible] = React.useState(false);
     const [deletingRowInfo, setDeletingRowInfo] = React.useState({});
@@ -58,7 +62,9 @@ export default function ScrollData(props) {
       closeRow(rowMap, rowKey);
       const prevIndex = listData.findIndex(item => item.key === rowKey);
       listData.splice(prevIndex, 1);
+
       setListData(listData);
+      setNumChildren(numChildren+1);
     };
   
     const onRowDidOpen = rowKey => {};
@@ -89,7 +95,7 @@ export default function ScrollData(props) {
               <Text right={0} flexDirection={'row'} position={'absolute'} alignSelf="flex-start" fontSize="xs" color={colours.text} _dark={{
               color: colours.text
             }}>
-                {item.isFolder ? "children: " : "terms: "}{item.isFolder ? item.childSets.length : item.terms.length}
+                {item.isFolder ? "files: " : "terms: "} {item.numChildren}
               </Text>
               {item.isFolder && <Icon as={<Ionicons name="folder" />} alignSelf="flex-end"  color={colours.text} size="lg" />}
             </HStack>
@@ -98,8 +104,12 @@ export default function ScrollData(props) {
       </Box>;
   
     const renderHiddenItem = (data, rowMap) => (
-      <HStack flex="1" pl="2.8" marginVertical={3} space={-5}>
-        <Pressable borderRadius={20} w="81" ml="auto" cursor="pointer" bg="red.500" justifyContent="center" _pressed={{opacity: 0.5}}>
+      <HStack flex="1" pl="2.8" marginVertical={3}>
+        <Pressable borderRadius={20} borderWidth={0.7} borderColor={'maroon'} w="70" ml="auto" cursor="pointer" bg="salmon" justifyContent="center" _pressed={{opacity: 0.5}}
+        onPress={() => {
+          console.log(data.item);
+          data.item.isFolder ? navigation.push('FolderSettingsPage', {Item: data.item}) : navigation.push('SetSettingsPage', {Item: data.item});
+        }}>
           <VStack alignItems="center" space={2}>
             <Icon as={<Ionicons name="create-outline" />} color={colours.text} size="sm" />
             <Text color={colours.text} fontSize="sm" fontWeight="medium">
@@ -107,7 +117,7 @@ export default function ScrollData(props) {
             </Text>
           </VStack>
         </Pressable>
-        <Pressable borderRadius={20} w="81" ml="auto" cursor="pointer" bg="red.500" justifyContent="center" onPress={() => confirmDeleteRow(rowMap, data.item.key, data.item.Name, data.item.isFolder, data.item.key)} _pressed={{opacity: 0.5}}>
+        <Pressable borderRadius={20} borderWidth={0.7} borderColor={'maroon'} w="70" ml="0.5" cursor="pointer" bg="red.500" justifyContent="center" onPress={() => confirmDeleteRow(rowMap, data.item.key, data.item.Name, data.item.isFolder, data.item.key)} _pressed={{opacity: 0.5}}>
           <VStack alignItems="center" space={2}>
             <Icon as={<Ionicons name="close" />} color={colours.text} size="sm" />
             <Text color={colours.text} fontSize="sm" fontWeight="medium">
@@ -123,7 +133,7 @@ export default function ScrollData(props) {
         <Center px="3">
           <ConfirmDeleteRowModal/>
         </Center>
-        <SwipeListView data={listData} renderItem={renderItem} renderHiddenItem={renderHiddenItem} contentContainerStyle={{paddingBottom:10}} rightOpenValue={-166} previewRowKey={'0'} previewOpenValue={-30} previewOpenDelay={10000} onRowDidOpen={onRowDidOpen} />
+        <SwipeListView data={listData} renderItem={renderItem} renderHiddenItem={renderHiddenItem} contentContainerStyle={{paddingBottom:10}} rightOpenValue={-144} previewRowKey={'0'} previewOpenValue={-90} previewOpenDelay={10000000} onRowDidOpen={onRowDidOpen} />
     </Box>
     )
   }
